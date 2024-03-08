@@ -18,7 +18,7 @@ class TestPtqdm(unittest.TestCase):
         x_1 = range(0, iterations)
         x_2 = range(1, iterations+1)
         y = [x_1[i] * x_2[i] for i in range(len(x_1))]
-        y_hat = ptqdm(method, (x_1, x_2), processes, zipped=True)
+        y_hat = ptqdm(method, (x_1, x_2), processes, zip=True)
         self.assertEqual(y_hat, y)
 
 
