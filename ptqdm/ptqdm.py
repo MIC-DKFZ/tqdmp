@@ -10,7 +10,7 @@ def ptqdm(function, iterable, processes, zipped=False, chunksize=1, desc=None, d
     Results are always ordered and the performance is the same as of Pool.map.
     :param function: The function that should be parallelized.
     :param iterable: The iterable passed to the function.
-    :param processes: The number of processes used for the parallelization.
+    :param processes: The number of processes used for the parallelization. Use singleprocessing if number of processes is zero or None.
     :param zipped: If multiple iterables are packed into a tuple. The iterables will be unpacked and passed as separate arguments to the function.
     :param chunksize: The iterable is based on the chunk size chopped into chunks and submitted to the process pool as separate tasks.
     :param desc: The description displayed by tqdm in the progress bar.
@@ -29,11 +29,16 @@ def ptqdm(function, iterable, processes, zipped=False, chunksize=1, desc=None, d
         length = len(iterable)
 
     results = [None] * length
-    with Pool(processes=processes) as p:
-        with tqdm(desc=desc, total=length, disable=disable) as pbar:
-            for i, result in p.imap_unordered(function_wrapper, enumerate(iterable), chunksize=chunksize):
-                results[i] = result
-                pbar.update()
+
+    if (processes is None) or (processes == 0):
+        for i, value in enumerate(tqdm(iterable, desc=desc, total=length, disable=disable)):
+            results[i] = function_wrapper((i, value))[1]
+    else:
+        with Pool(processes=processes) as p:
+            with tqdm(desc=desc, total=length, disable=disable) as pbar:
+                for i, result in p.imap_unordered(function_wrapper, enumerate(iterable), chunksize=chunksize):
+                    results[i] = result
+                    pbar.update()
     return results
 
 
