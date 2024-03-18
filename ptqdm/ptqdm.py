@@ -23,7 +23,7 @@ def ptqdm(
 
     Parameters:
     - function (callable): The function to be executed in parallel. It should accept the elements of `iterable` as its first arguments.
-    - iterable (iterable): An iterable (or a tuple of iterables if `zip` is True) whose elements are passed as arguments to `function`.
+    - iterable (iterable): An iterable (or a tuple of iterables if `mult_iter` is True) whose elements are passed as arguments to `function`.
     - processes (int): The number of worker processes to use. If 0 or None, runs synchronously in the main process.
     - mult_iter (bool, optional): If True and `iterable` is a tuple of iterables, elements from each iterable are combined using `zip` and passed as separate arguments to `function`.
     - mult_out (bool, optional): If True and `function` returns a tuple of values, the output is a tuple of lists, each containing elements from the corresponding position in the output tuples.
@@ -33,7 +33,7 @@ def ptqdm(
     - kwargs: Additional keyword arguments to pass to `function`.
 
     Returns:
-    - List of results from applying `function` to elements of `iterable`, or, if `unzip` is True, a tuple of lists containing unpacked results.
+    - List of results from applying `function` to elements of `iterable`, or, if `mult_out` is True, a tuple of lists containing unpacked results.
 
     Notes:
     - Results are always returned in the order corresponding to the input iterable, mirroring the behavior of `Pool.map`.
@@ -41,7 +41,7 @@ def ptqdm(
     - The `function` can optionally accept keyword arguments if `kwargs` is provided.
     """
     
-    # Wrapper for handling additional arguments and zipping/unzipping logic
+    # Wrapper for handling additional arguments and multiple iterables
     if kwargs:
         function_wrapper = partial(wrapper, function=function, mult_iter=mult_iter, **kwargs)
     else:
@@ -81,7 +81,7 @@ def ptqdm(
 
 def wrapper(enum_iterable, function, mult_iter, **kwargs):
     """
-    Internal helper function for applying the target function with or without zipping input arguments.
+    Internal helper function for applying the target function with or without multiple input arguments.
     
     Parameters are similar to `ptqdm`, tailored for internal use with multiprocessing.Pool.
     """
