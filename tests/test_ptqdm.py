@@ -34,10 +34,10 @@ class TestPtqdm(unittest.TestCase):
         iterable1 = range(0, iterations)
         iterable2 = range(5, iterations+5)
         y_single = [method(index1, index2, arg1=arg1, arg2=arg2, multi_output=True) for index1, index2 in zip(iterable1, iterable2)]
-        y_single1, y_single2 = zip(*y_single)
+        y_single1, y_single2 = map(list, zip(*y_single))
         y_multi1, y_multi2 = ptqdm(method, (iterable1, iterable2), processes, mult_iter=True, mult_out=True, arg1=arg1, arg2=arg2, multi_output=True)
-        self.assertEqual(list(y_single1), y_multi1)
-        self.assertEqual(list(y_single2), y_multi2)
+        self.assertEqual(y_single1, y_multi1)
+        self.assertEqual(y_single2, y_multi2)
 
 
 def method(index1, index2=1, arg1=None, arg2=None, multi_output=False):
