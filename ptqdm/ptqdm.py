@@ -70,11 +70,7 @@ def ptqdm(
 
     # Unzip results if requested via mult_out
     if mult_out:
-        unzipped_results = [[] for i in range(len(results[0]))]
-        for i in range(len(results)):
-            for j in range(len(unzipped_results)):
-                unzipped_results[j].append(results[i][j])
-        results = unzipped_results
+        results = map(list, zip(*results))
 
     return results
 
