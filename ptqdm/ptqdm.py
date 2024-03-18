@@ -3,15 +3,13 @@ from functools import partial
 from tqdm import tqdm
 from typing import Callable, Iterable, List, Tuple, Any, Optional, Union
 
-_zip = zip
-
 
 def ptqdm(
     function: Callable,
     iterable: Union[Iterable, Tuple[Iterable]],
     processes: Optional[int],
-    zip: bool = False,
-    unzip: bool = False,
+    mult_iter: bool = False,
+    mult_out: bool = False,
     chunksize: int = 1,
     desc: Optional[str] = None,
     disable: bool = False,
@@ -27,8 +25,8 @@ def ptqdm(
     - function (callable): The function to be executed in parallel. It should accept the elements of `iterable` as its first arguments.
     - iterable (iterable): An iterable (or a tuple of iterables if `zip` is True) whose elements are passed as arguments to `function`.
     - processes (int): The number of worker processes to use. If 0 or None, runs synchronously in the main process.
-    - zip (bool, optional): If True and `iterable` is a tuple of iterables, elements from each iterable are combined using `zip` and passed as separate arguments to `function`.
-    - unzip (bool, optional): If True and `function` returns a tuple of values, the output is a tuple of lists, each containing elements from the corresponding position in the output tuples.
+    - mult_iter (bool, optional): If True and `iterable` is a tuple of iterables, elements from each iterable are combined using `zip` and passed as separate arguments to `function`.
+    - mult_out (bool, optional): If True and `function` returns a tuple of values, the output is a tuple of lists, each containing elements from the corresponding position in the output tuples.
     - chunksize (int, optional): The number of tasks dispatched to each worker process at a time. This can be adjusted to optimize performance.
     - desc (str, optional): Description text to display above the progress bar.
     - disable (bool, optional): If True, the tqdm progress bar is not displayed.
@@ -45,14 +43,14 @@ def ptqdm(
     
     # Wrapper for handling additional arguments and zipping/unzipping logic
     if kwargs:
-        function_wrapper = partial(wrapper, function=function, zip=zip, **kwargs)
+        function_wrapper = partial(wrapper, function=function, mult_iter=mult_iter, **kwargs)
     else:
-        function_wrapper = partial(wrapper, function=function, zip=zip)
+        function_wrapper = partial(wrapper, function=function, mult_iter=mult_iter)
 
-    # Prepare iterable based on zip flag and compute length
-    if zip:
+    # Prepare iterable based on mult_iter flag and compute length
+    if mult_iter:
         length = len(iterable[0])
-        iterable = _zip(*iterable)
+        iterable = zip(*iterable)
     else:
         length = len(iterable)
 
@@ -70,8 +68,8 @@ def ptqdm(
                     results[i] = result
                     pbar.update()
 
-    # Unzip results if requested
-    if unzip:
+    # Unzip results if requested via mult_out
+    if mult_out:
         unzipped_results = [[] for i in range(len(results[0]))]
         for i in range(len(results)):
             for j in range(len(unzipped_results)):
@@ -81,14 +79,14 @@ def ptqdm(
     return results
 
 
-def wrapper(enum_iterable, function, zip, **kwargs):
+def wrapper(enum_iterable, function, mult_iter, **kwargs):
     """
     Internal helper function for applying the target function with or without zipping input arguments.
     
     Parameters are similar to `ptqdm`, tailored for internal use with multiprocessing.Pool.
     """
     i, args = enum_iterable
-    if zip:
+    if mult_iter:
         result = function(*args, **kwargs)
     else:
         result = function(args, **kwargs)
