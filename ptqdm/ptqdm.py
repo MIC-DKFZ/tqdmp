@@ -1,14 +1,14 @@
 from multiprocessing import Pool
 from functools import partial
 from tqdm import tqdm
-from typing import Callable, Iterable, List, Tuple, Any, Optional
+from typing import Callable, Iterable, List, Tuple, Any, Optional, Union
 
 _zip = zip
 
 
 def ptqdm(
-    function, #: Callable[..., Any],
-    iterable, #: Iterable[Any] | Tuple[Iterable[Any], ...],
+    function: Callable,
+    iterable: Union[Iterable, Tuple[Iterable]],
     processes: Optional[int],
     zip: bool = False,
     unzip: bool = False,
@@ -16,7 +16,7 @@ def ptqdm(
     desc: Optional[str] = None,
     disable: bool = False,
     **kwargs: Any
-): # -> List[Any] | Tuple[List[Any], ...]:
+) -> Union[List[Tuple], Tuple[List]]:
     """
     Executes a function in parallel across multiple processes, optionally with progress tracking via tqdm.
     
