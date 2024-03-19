@@ -8,18 +8,11 @@
 
 Multiprocessing with progressbars!
 
-----------------------------------
-
-Project description...
-
 ## Installation
 
-You can install `tqdmp` via [pip]:
+You can install `tqdmp` via [pip](https://pypi.org/project/tqdmp/):
 
     pip install tqdmp
-
-
-
 
 ## Contributing
 
