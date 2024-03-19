@@ -1,10 +1,10 @@
-# ptqdm
+# tqdmp
 
-[![License MIT](https://img.shields.io/pypi/l/ptqdm.svg?color=green)](https://github.com/Karol-G/ptqdm/raw/main/LICENSE)
-[![PyPI](https://img.shields.io/pypi/v/ptqdm.svg?color=green)](https://pypi.org/project/ptqdm)
-[![Python Version](https://img.shields.io/pypi/pyversions/ptqdm.svg?color=green)](https://python.org)
-[![tests](https://github.com/Karol-G/ptqdm/workflows/tests/badge.svg)](https://github.com/Karol-G/ptqdm/actions)
-[![codecov](https://codecov.io/gh/Karol-G/ptqdm/branch/main/graph/badge.svg)](https://codecov.io/gh/Karol-G/ptqdm)
+[![License MIT](https://img.shields.io/pypi/l/tqdmp.svg?color=green)](https://github.com/Karol-G/tqdmp/raw/main/LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/tqdmp.svg?color=green)](https://pypi.org/project/tqdmp)
+[![Python Version](https://img.shields.io/pypi/pyversions/tqdmp.svg?color=green)](https://python.org)
+[![tests](https://github.com/Karol-G/tqdmp/workflows/tests/badge.svg)](https://github.com/Karol-G/tqdmp/actions)
+[![codecov](https://codecov.io/gh/Karol-G/tqdmp/branch/main/graph/badge.svg)](https://codecov.io/gh/Karol-G/tqdmp)
 
 Multiprocessing with progressbars!
 
@@ -14,9 +14,9 @@ Project description...
 
 ## Installation
 
-You can install `ptqdm` via [pip]:
+You can install `tqdmp` via [pip]:
 
-    pip install ptqdm
+    pip install tqdmp
 
 
 
@@ -29,7 +29,7 @@ the coverage at least stays the same before you submit a pull request.
 ## License
 
 Distributed under the terms of the [MIT] license,
-"ptqdm" is free and open source software
+"tqdmp" is free and open source software
 
 ## Issues
 

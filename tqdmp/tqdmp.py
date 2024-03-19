@@ -4,7 +4,7 @@ from tqdm import tqdm
 from typing import Callable, Iterable, List, Tuple, Any, Optional, Union
 
 
-def ptqdm(
+def tqdmp(
     function: Callable,
     iterable: Union[Iterable, Tuple[Iterable]],
     processes: Optional[int],
@@ -79,7 +79,7 @@ def wrapper(enum_iterable, function, mult_iter, **kwargs):
     """
     Internal helper function for applying the target function with or without multiple input arguments.
     
-    Parameters are similar to `ptqdm`, tailored for internal use with multiprocessing.Pool.
+    Parameters are similar to `tqdmp`, tailored for internal use with multiprocessing.Pool.
     """
     i, args = enum_iterable
     if mult_iter:
