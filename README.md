@@ -3,7 +3,7 @@
 [![License MIT](https://img.shields.io/pypi/l/tqdmp.svg?color=green)](https://github.com/Karol-G/tqdmp/raw/main/LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/tqdmp.svg?color=green)](https://pypi.org/project/tqdmp)
 [![Python Version](https://img.shields.io/pypi/pyversions/tqdmp.svg?color=green)](https://python.org)
-[![tests](https://github.com/Karol-G/tqdmp/workflows/tests/badge.svg)](https://github.com/Karol-G/tqdmp/actions)
+![Unit Tests](https://github.com/MIC-DKFZ/tqdmp/actions/workflows/test_and_deploy.yml/badge.svg?branch=main)
 [![codecov](https://codecov.io/gh/Karol-G/tqdmp/branch/main/graph/badge.svg)](https://codecov.io/gh/Karol-G/tqdmp)
 
 Multiprocessing with tqdm progressbars!
