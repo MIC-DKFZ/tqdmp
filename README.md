@@ -13,7 +13,7 @@ Did you feel like you are missing a progressbar when using doing multiprocessing
 - Use multiple iterables by simply packing them as a tuple
 - Unpack the function output of the parallized function in case it returns multiple variables
 - Switch to single processing by setting the number of processes to `None` or `0`
-- Pass additional constant varibales to the parallized function as kwargs 
+- Pass additional constant variables to the parallized function as kwargs 
 
 Examples of these usecases are given in section `Examples`.
 
