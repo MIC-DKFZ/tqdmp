@@ -25,7 +25,7 @@ You can install `tqdmp` via [pip](https://pypi.org/project/tqdmp/):
 
 ## Examples
 
-In the following we demonstrate the general useage of tqdmp and some useful features.
+In the following we demonstrate the general useage of `tqdmp` and some useful features.
 
 ### Default multiprocessing
 Using `pool.map`:
