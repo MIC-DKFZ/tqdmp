@@ -7,7 +7,7 @@ from typing import Callable, Iterable, List, Tuple, Any, Optional, Union
 def tqdmp(
     function: Callable,
     iterable: Union[Iterable, Tuple[Iterable]],
-    processes: Optional[int],
+    num_processes: Optional[int],
     mult_iter: bool = False,
     mult_out: bool = False,
     chunksize: int = 1,
@@ -24,7 +24,7 @@ def tqdmp(
     Parameters:
     - function (callable): The function to be executed in parallel. It should accept the elements of `iterable` as its first arguments.
     - iterable (iterable): An iterable (or a tuple of iterables if `mult_iter` is True) whose elements are passed as arguments to `function`.
-    - processes (int): The number of worker processes to use. If 0 or None, runs synchronously in the main process.
+    - num_processes (int): The number of worker processes to use. If 0 or None, runs synchronously in the main process.
     - mult_iter (bool, optional): If True and `iterable` is a tuple of iterables, elements from each iterable are combined using `zip` and passed as separate arguments to `function`.
     - mult_out (bool, optional): If True and `function` returns a tuple of values, the output is a tuple of lists, each containing elements from the corresponding position in the output tuples.
     - chunksize (int, optional): The number of tasks dispatched to each worker process at a time. This can be adjusted to optimize performance.
@@ -57,12 +57,12 @@ def tqdmp(
     results = [None] * length
 
     # Synchronous execution if processes is 0 or None
-    if (processes is None) or (processes == 0):
+    if (num_processes is None) or (num_processes == 0):
         for i, value in enumerate(tqdm(iterable, desc=desc, total=length, disable=disable)):
             results[i] = function_wrapper((i, value))[1]
     else:
         # Parallel execution with Pool
-        with Pool(processes=processes) as p:
+        with Pool(processes=num_processes) as p:
             with tqdm(desc=desc, total=length, disable=disable) as pbar:
                 for i, result in p.imap_unordered(function_wrapper, enumerate(iterable), chunksize=chunksize):
                     results[i] = result
